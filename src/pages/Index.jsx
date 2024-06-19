@@ -1,29 +1,20 @@
-import { Container, VStack, Heading, Text, Box, Image, SimpleGrid } from "@chakra-ui/react";
-
-const recipes = [
-  {
-    title: "Spaghetti Carbonara",
-    description: "A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper.",
-    image: "/images/spaghetti-carbonara.jpg",
-  },
-  {
-    title: "Chicken Tikka Masala",
-    description: "Chunks of roasted marinated chicken in a spiced curry sauce.",
-    image: "/images/chicken-tikka-masala.jpg",
-  },
-  {
-    title: "Beef Stroganoff",
-    description: "A Russian dish of sautéed pieces of beef served in a sauce with smetana (sour cream).",
-    image: "/images/beef-stroganoff.jpg",
-  },
-];
+import { Container, VStack, Heading, Text, Box, Image, SimpleGrid, Button } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Index = () => {
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    const storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
+    setRecipes(storedRecipes);
+  }, []);
   return (
     <Container maxW="container.xl" py={10}>
       <VStack spacing={8}>
         <Heading as="h1" size="2xl">Recipe Sharing Website</Heading>
         <Text fontSize="xl">Discover and share your favorite recipes!</Text>
+        <Button as={Link} to="/submit-recipe" colorScheme="teal" size="lg">Submit a Recipe</Button>
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10}>
           {recipes.map((recipe, index) => (
             <Box key={index} borderWidth="1px" borderRadius="lg" overflow="hidden">
